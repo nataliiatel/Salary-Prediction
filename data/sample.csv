@@ -1,0 +1,11 @@
+age,education,years_experience,skills,target
+25,Bachelors,2,python;sql,1
+30,Masters,5,java;sql,1
+22,HS,1,excel,0
+40,PhD,15,research;python,1
+28,Bachelors,4,python;excel,1
+35,Masters,8,java,0
+45,HS,20,management,0
+32,Bachelors,6,python;java,1
+26,HS,3,excel,0
+29,Masters,7,sql;python,1
