@@ -27,7 +27,26 @@ uvicorn app.main:app --reload
 4. Predict (example)
 
 ```bash
-curl -sS -X POST "http://127.0.0.1:8000/predict" -H "Content-Type: application/json" -d '{"age":30, "education":"Bachelors", "years_experience":5, "skills":"python;sql"}'
+curl -X POST "http://127.0.0.1:8000/predict"  "   -d '{ent-Type: application/json"
+    "student_id": "S649",
+    "age": 21,
+    "gender": "Male",
+    "high_school_gpa": 3.9,
+    "sat_score": 1580,
+    "university_gpa": 3.9,
+    "field_of_study": "Computer Science",
+    "internships_completed": 4,
+    "projects_completed": 9,
+    "certifications": 5,
+    "soft_skills_score": 8,
+    "networking_score": 9,
+    "job_offers": 0,
+    "starting_salary": 14800000,
+    "years_to_promotion": 1,
+    "current_job_level": "Senior",
+    "work_life_balance": 5,
+    "entrepreneurship": "No"
+  }'
 ```
 
 Files created by scaffold:
