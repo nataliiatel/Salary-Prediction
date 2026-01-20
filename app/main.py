@@ -24,12 +24,37 @@ class CareerInput(BaseModel):
     soft_skills_score: Optional[int] = None
     networking_score: Optional[int] = None
     job_offers: Optional[int] = None
-    starting_salary: Optional[float] = None
+    career_satisfaction: Optional[int] = None
     years_to_promotion: Optional[int] = None
     current_job_level: Optional[str] = None
     work_life_balance: Optional[int] = None
     entrepreneurship: Optional[str] = None
     target: Optional[int] = None
+
+    class Config:
+        populate_by_name = True
+        json_schema_extra = {
+            "example": {
+                "student_id": "S001",
+                "age": 22,
+                "gender": "Male",
+                "high_school_gpa": 3.8,
+                "sat_score": 1450,
+                "university_gpa": 3.6,
+                "field_of_study": "Computer Science",
+                "internships_completed": 3,
+                "projects_completed": 7,
+                "certifications": 2,
+                "soft_skills_score": 8,
+                "networking_score": 7,
+                "job_offers": 3,
+                "career_satisfaction": 8,
+                "years_to_promotion": 2,
+                "current_job_level": "Mid",
+                "work_life_balance": 7,
+                "entrepreneurship": "No"
+            }
+        }
 
 
 BASE = Path(__file__).resolve().parents[1]
@@ -87,13 +112,8 @@ def predict(payload: CareerInput):
             df = pd.DataFrame([in_dict])
 
         pred = model.predict(df)[0]
-        prob = None
-        try:
-            prob = float(model.predict_proba(df)[0].max())
-        except Exception:
-            prob = None
-
-        return {'prediction': int(pred), 'probability': prob}
+        
+        return {'prediction': float(pred)}
     except Exception as e:
         # return HTTP 500 with error details
         raise HTTPException(status_code=500, detail=str(e))

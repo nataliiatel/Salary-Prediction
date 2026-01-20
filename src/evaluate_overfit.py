@@ -33,13 +33,13 @@ def main():
     pipeline = build_pipeline(X)
 
     print(f'Running cross-validation (cv={args.cv}) with train scores...')
-    cv_results = cross_validate(pipeline, X, y, cv=args.cv, return_train_score=True, scoring='accuracy', n_jobs=-1)
+    cv_results = cross_validate(pipeline, X, y, cv=args.cv, return_train_score=True, scoring='r2', n_jobs=-1)
 
     train_scores = cv_results['train_score']
     test_scores = cv_results['test_score']
 
-    print('Train accuracy: mean={:.4f} std={:.4f}'.format(np.mean(train_scores), np.std(train_scores)))
-    print('Validation accuracy: mean={:.4f} std={:.4f}'.format(np.mean(test_scores), np.std(test_scores)))
+    print('Train R²: mean={:.4f} std={:.4f}'.format(np.mean(train_scores), np.std(train_scores)))
+    print('Validation R²: mean={:.4f} std={:.4f}'.format(np.mean(test_scores), np.std(test_scores)))
 
     # Save numeric summary
     summary = {
@@ -55,17 +55,17 @@ def main():
     # Learning curve
     print('Computing learning curve (this may take a moment)')
     train_sizes, train_scores_lc, val_scores_lc = learning_curve(
-        pipeline, X, y, cv=args.cv, n_jobs=-1, train_sizes=np.linspace(0.1, 1.0, 5), scoring='accuracy'
+        pipeline, X, y, cv=args.cv, n_jobs=-1, train_sizes=np.linspace(0.1, 1.0, 5), scoring='r2'
     )
 
     train_scores_mean = np.mean(train_scores_lc, axis=1)
     val_scores_mean = np.mean(val_scores_lc, axis=1)
 
     plt.figure(figsize=(6, 4))
-    plt.plot(train_sizes, train_scores_mean, 'o-', label='Training score')
-    plt.plot(train_sizes, val_scores_mean, 'o-', label='Cross-validation score')
+    plt.plot(train_sizes, train_scores_mean, 'o-', label='Training R²')
+    plt.plot(train_sizes, val_scores_mean, 'o-', label='Cross-validation R²')
     plt.xlabel('Training examples')
-    plt.ylabel('Accuracy')
+    plt.ylabel('R² Score')
     plt.title('Learning Curve')
     plt.legend(loc='best')
     lc_path = models_dir / 'learning_curve.png'
